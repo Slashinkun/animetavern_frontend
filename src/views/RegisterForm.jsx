@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // empêche le reload
+    e.preventDefault(); 
 
     fetch("http://localhost:8080/register", {
       method: "POST",
@@ -18,7 +20,7 @@ export default function Register() {
       })
     })
       .then(res => res.text())
-      .then(data => console.log(data))
+      .then(data => navigate("/"))
       .catch(err => console.error(err));
   };
 

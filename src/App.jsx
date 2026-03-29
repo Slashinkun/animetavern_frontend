@@ -6,6 +6,7 @@ import LoginForm from './views/LoginForm';
 import LogoutButton from './components/LogoutButton';
 import AnimePage from './views/AnimePage';
 import NotFound from './views/NotFound';
+import Search from './views/Search';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,15 +24,16 @@ function App() {
         {!isLoggedIn && <Link to="/register">Register</Link>}
         {!isLoggedIn && <Link to="/login">Login</Link>}
         {isLoggedIn && <LogoutButton setIsLoggedIn={setIsLoggedIn}></LogoutButton>}
+        <Link to="/search">Search</Link>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path='*' element={<NotFound />} />
-        <Route path='/notfound' element={<NotFound />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/anime/:id' element={<AnimePage />} />
+        <Route path="/anime/:id" element={<AnimePage />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,36 +1,42 @@
-
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "../styles/animepage.css"
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export default function Anime() {
-   const { id } = useParams();
+export default function AnimePage() {
+  const { id } = useParams();
   const [anime, setAnime] = useState(null);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
+  
 
   useEffect(() => {
-    fetch(`http://localhost:8080/anime/${id}`,{
-      credentials: "include"
-    })
-      .then(res => {
-        if(!res.ok){
-          navigate("/notfound")
-        }
-      })
-      .then(data => setAnime(data))
-      .catch(navigate("/notfound"));
+    const fetchAnime = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`http://localhost:8080/anime/${id}`);
+        const data = await res.json();
+        setAnime(data.anime);
+      } catch (err) {
+        console.error("Erreur fetch anime:", err);
+        setAnime(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnime();
   }, [id]);
 
-  if (!anime) return <div>Chargement...</div>;
+  if (loading) return <p>Chargement...</p>;
+  if (!anime) return <p>Anime introuvable</p>;
 
   return (
-    <div className="container">
-      <img src={anime.data.images.jpg.image_url}></img>
-      <h1>{anime.data.title}</h1>
+    <div>
+      <h1>{anime.data.title_english || anime.data.title}</h1>
+      <img src={anime.data.images.jpg.large_image_url} alt={anime.data.title} />
       <p>{anime.data.synopsis}</p>
-      
+      <p>Episodes : {anime.data.episodes || "?"}</p>
+      <p>Score : {anime.data.score || "?"}</p>
+      <p>Type : {anime.data.type}</p>
     </div>
   );
 }

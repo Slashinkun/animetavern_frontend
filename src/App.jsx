@@ -1,42 +1,101 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from './views/Home';
-import RegisterForm from './views/RegisterForm';
-import LoginForm from './views/LoginForm';
-import LogoutButton from './components/LogoutButton';
-import AnimePage from './views/AnimePage';
-import NotFound from './views/NotFound';
-import Search from './views/Search';
+
+import Home from "./pages/Home";
+import RegisterForm from "./pages/RegisterForm";
+import LoginForm from "./pages/LoginForm";
+import LogoutButton from "./components/LogoutButton";
+import AnimePage from "./pages/AnimePage";
+import NotFound from "./pages/NotFound";
+import Search from "./pages/Search";
+import UserPage from "./pages/UserPage";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  
+  // check session
   useEffect(() => {
-    const tokenExists = document.cookie.includes("token");
-    setIsLoggedIn(tokenExists);
+    fetch("http://localhost:8080/me", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("not logged");
+        return res.json();
+      })
+      .then((data) => {
+        setUserId(data.id);
+        setUsername(data.username);
+      })
+      .catch(() => {
+        setUserId(null);
+        setUsername("");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
+  const isLoggedIn = !!userId;
+
+  if (loading) {
+    return <div className="p-4">Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/">Accueil</Link>
-        {!isLoggedIn && <Link to="/register">Register</Link>}
-        {!isLoggedIn && <Link to="/login">Login</Link>}
-        {isLoggedIn && <LogoutButton setIsLoggedIn={setIsLoggedIn}></LogoutButton>}
+      <nav className="bg-gray-800 p-4 text-white flex gap-4">
+        <Link to="/">AnimeTavern</Link>
+
+        {!isLoggedIn && (
+          <>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
+          </>
+        )}
+
+        {isLoggedIn && userId && (
+          <>
+            <Link to={`/user/${userId}`}>Profile</Link>
+            <LogoutButton
+              setUserId={setUserId}
+              setUsername={setUsername}
+            />
+          </>
+        )}
+
         <Link to="/search">Search</Link>
       </nav>
+
+      <div className="p-2">
+        {isLoggedIn ? (
+          <p>Connecté en tant que {username}</p>
+        ) : (
+          <p>Non connecté</p>
+        )}
+      </div>
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
+        <Route
+          path="/login"
+          element={
+            <LoginForm
+              setUserId={setUserId}
+              setUsername={setUsername}
+            />
+          }
+        />
         <Route path="/anime/:id" element={<AnimePage />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/user/:id" element={<UserPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -5,22 +5,20 @@ export default function LogoutButton({ setIsLoggedIn }) {
   
   const navigate = useNavigate();
 
-  const handleLogout = async (e) => {
-  e.preventDefault();
-
+  const handleLogout = async () => {
   try {
     const res = await fetch("http://localhost:8080/logout", {
       method: "POST",
       credentials: "include"
     });
 
-    if (res.ok) {
-      setIsLoggedIn(false);
-      navigate("/"); // redirige vers home
-    } else {
-      const text = await res.text();
-      console.error("Erreur logout :", text);
+    if (!res.ok) {
+      console.error(await res.text());
+      return;
     }
+
+    setIsLoggedIn(false);
+    navigate("/");
   } catch (err) {
     console.error(err);
   }

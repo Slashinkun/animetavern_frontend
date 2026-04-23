@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import AnimeHeader from "../components/AnimeHeader";
+import AnimeData from "../components/AnimeData";
+
 
 export default function AnimePage() {
   const { id } = useParams();
@@ -10,8 +13,10 @@ export default function AnimePage() {
     const fetchAnime = async () => {
       try {
         setLoading(true);
-
-        const res = await fetch(`http://localhost:8080/anime/${id}`);
+        console.log("CALLING API WITH COOKIE:", document.cookie)
+        const res = await fetch(`http://localhost:8080/anime/${id}`, {
+        credentials: "include"
+        });
         const json = await res.json();
 
         setData(json);
@@ -31,19 +36,40 @@ export default function AnimePage() {
 
   const anime = data.anime.data;
 
+  const addAnimeToList = async () => {
+  await fetch("http://localhost:8080/user/anime", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ anime_id: anime.mal_id })
+  });
+  };
+
   return (
     <div>
-      <h1>{anime.title_english || anime.title}</h1>
+      <AnimeHeader anime={anime}></AnimeHeader>
 
-      <img
-        src={anime.images.jpg.large_image_url}
-        alt={anime.title}
-      />
+      {!data.isInList && (<button onClick={addAnimeToList} className="border">Add to list</button>)}
 
-      <p>{anime.synopsis}</p>
-      <p>Episodes : {anime.episodes || "?"}</p>
-      <p>Score : {anime.score || "?"}</p>
-      <p>Type : {anime.type}</p>
+      
+      <div className="grid grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+        <div className="col-span-1">
+          <AnimeData anime={anime} />
+        </div>
+
+        {/* <div className="col-span-2">
+          <AnimeReviews animeId={anime.mal_id} />
+        </div> */}
+
+</div>
+
+
+      
+      
+
+     
+      
     </div>
   );
 }

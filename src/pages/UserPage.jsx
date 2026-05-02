@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import AnimeEntry from "../components/AnimeEntry"
 
 export default function UserPage() {
   const { id } = useParams()
@@ -43,9 +44,10 @@ export default function UserPage() {
       <h2>Animes:</h2>
       <ul>
         {userData.animes.map(a => (
-          <li key={a.id}>
-            {a.title} ({a.episodes} épisodes)
-          </li>
+          // <li key={a.id}>
+          //   {a.title} ({a.episodes} épisodes)
+          // </li>
+          <AnimeEntry anime={a} isUser={userData.is_user} key={a.mal_id}></AnimeEntry>
         ))}
       </ul>
 

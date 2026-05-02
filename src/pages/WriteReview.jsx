@@ -1,0 +1,51 @@
+import { use, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+export default function WriteReview(){
+
+    const { id } = useParams()
+    const [content,setContent] = useState("")
+    const [rating,setRating] = useState("")
+    const navigate = useNavigate();
+
+    const sendReview = async () => {
+
+        try {
+            const res = await fetch(`http://localhost:8080/anime/${id}/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ anime_id : Number(id) ,content, rating })
+        })
+            if(!res.ok){
+                const text = await res.text();
+                alert("Erreur ajout critique : " + text);
+                return;
+            }
+
+            navigate(`/anime/${id}`);
+
+        } catch (err) {
+             console.error(err);
+             alert("Erreur serveur");
+        }
+        
+
+    }
+
+    return (
+        <div className="p-2">
+            <textarea value={content} onChange={(e) => setContent(e.target.value)} className="w-2xl h-100 border" />
+            <input
+            type="number"
+            min="0"
+            max="10"
+            value={rating}
+            onChange={(e) => setRating(Number(e.target.value))}
+            className="border"
+            />
+            <button onClick={sendReview} className="border">Envoyer</button>
+        </div>
+    )
+}

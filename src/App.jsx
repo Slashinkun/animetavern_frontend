@@ -9,6 +9,7 @@ import AnimePage from "./pages/AnimePage";
 import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
 import UserPage from "./pages/UserPage";
+import WriteReview from "./pages/WriteReview";
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -89,9 +90,10 @@ function App() {
             />
           }
         />
-        <Route path="/anime/:id" element={<AnimePage />} />
+        <Route path="/anime/:id" element={<AnimePage isLoggedIn={isLoggedIn} />} />
         <Route path="/search" element={<Search />} />
         <Route path="/user/:id" element={<UserPage />} />
+        <Route path="/anime/write/:id" element={<WriteReview/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

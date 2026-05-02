@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AnimeHeader from "../components/AnimeHeader";
 import AnimeData from "../components/AnimeData";
 
 
-export default function AnimePage() {
+export default function AnimePage({ isLoggedIn }) {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,15 @@ export default function AnimePage() {
       <div className="grid grid-cols-3 gap-6 max-w-6xl mx-auto">
 
         <div className="col-span-1">
+          {
+            isLoggedIn && (
+            <Link to={`/anime/write/${id}`}>
+            <button className="border" >Write a review</button>
+          </Link>)
+          }
+          
           <AnimeData anime={anime} />
+          
         </div>
 
         {/* <div className="col-span-2">

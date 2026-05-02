@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchEntry from "../components/SearchEntry";
+import { Link } from "react-router-dom";
 
 export default function Search() {
   const [query, setQuery] = useState("");
@@ -22,8 +24,15 @@ export default function Search() {
       const uniqueAnimes = Array.from(new Map(data.data.map(a => [a.mal_id, a])).values());
 
       // Filtre pour garder seulement les titres qui contiennent la query
-      const filteredAnimes = uniqueAnimes.filter(anime =>
-        anime.title.toLowerCase().includes(query.toLowerCase())
+      const filteredAnimes = uniqueAnimes.filter(anime => {
+        const q = query.toLowerCase()
+
+        return (
+          anime.title?.toLowerCase().includes(q) ||
+          anime.title_english?.toLowerCase().includes(q)
+        )
+      }
+        
       );
 
       setResults(filteredAnimes);
@@ -42,27 +51,31 @@ export default function Search() {
         onChange={e => setQuery(e.target.value)}
         className=" border border-gray rounded m-2"
       />
-      <button onClick={handleSearch}>Chercher</button>
+      <button onClick={handleSearch} className="border rounded-xs">Chercher</button>
 
       <div style={{ marginTop: "20px" }}>
         {hasSearched && results.length === 0 && <p>Aucun résultat</p>}
 
         {results.map((anime, index) => (
-          <div
-           key={anime.mal_id}
-            style={{ marginBottom: "10px", cursor: "pointer" }}
-            onClick={() => navigate(`/anime/${anime.mal_id}`)}
-          >
-            <img
-              src={anime.images.jpg.small_image_url}
-              alt={anime.title}
-              width={50}
-              style={{ marginRight: "10px" }}
-            />
-            <span>
-              {anime.title_english || anime.title} ({anime.episodes || "?"} eps)
-            </span>
-          </div>
+          // <Link
+          //  key={anime.mal_id}
+          //  className="mb-2 cursor-pointer"
+          //   //style={{ marginBottom: "10px", cursor: "pointer" }}
+          //   to={`/anime/${anime.mal_id}`}
+          // >
+          //   {/* <img
+          //     src={anime.images.jpg.small_image_url}
+          //     alt={anime.title}
+          //     width={50}
+          //     style={{ marginRight: "10px" }}
+          //   />
+          //   <span>
+          //     {anime.title_english || anime.title} ({anime.episodes || "?"} eps)
+          //   </span> */}
+
+            
+          // </Link>
+          <SearchEntry anime={anime} key={anime.mal_id}></SearchEntry>
         ))}
       </div>
     </div>

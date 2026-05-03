@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link,NavLink } from "react-router-dom";
 
 import Home from "./pages/Home";
 import RegisterForm from "./pages/RegisterForm";
@@ -8,8 +8,11 @@ import LogoutButton from "./components/LogoutButton";
 import AnimePage from "./pages/AnimePage";
 import NotFound from "./pages/NotFound";
 import Search from "./pages/Search";
-import UserPage from "./pages/UserPage";
+import UserPage from "./pages/users/UserPage";
 import WriteReview from "./pages/WriteReview";
+import UserReviews from "./pages/users/UserReviews";
+import UserProfile from "./pages/users/UserProfile";
+import UserFavorites from "./pages/users/UserFavorites";
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -47,34 +50,45 @@ function App() {
 
   return (
     <BrowserRouter>
-      <nav className="bg-gray-800 p-4 text-white flex gap-4">
-        <Link to="/">AnimeTavern</Link>
+      <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
+        
+        <div className="flex gap-4">
+          <Link to="/">AnimeTavern</Link>
 
-        {!isLoggedIn && (
-          <>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
-          </>
-        )}
-
-        {isLoggedIn && userId && (
-          <>
+          
+          <Link to="/search">Search</Link>
+          {isLoggedIn && (
             <Link to={`/user/${userId}`}>Profile</Link>
+          )}
+          
+        </div>
+
+        <div className="flex gap-4 items-center">
+          {!isLoggedIn && (
+            <>
+              <Link to="/register">Register</Link>
+              <Link to="/login">Login</Link>
+            </>
+          )}
+          {isLoggedIn && userId && (
+          <>
+            
             <LogoutButton
               setUserId={setUserId}
               setUsername={setUsername}
             />
           </>
         )}
+        </div>
+        
 
-        <Link to="/search">Search</Link>
       </nav>
 
       <div className="p-2">
         {isLoggedIn ? (
-          <p>Connecté en tant que {username}</p>
+          <p>Logged in as {username}</p>
         ) : (
-          <p>Non connecté</p>
+          <p>Guest</p>
         )}
       </div>
 
@@ -92,7 +106,13 @@ function App() {
         />
         <Route path="/anime/:id" element={<AnimePage isLoggedIn={isLoggedIn} />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/user/:id" element={<UserPage />} />
+        
+        <Route path="/user/:id" element={<UserPage />}>
+          <Route index element={<UserProfile />} />
+          <Route path="favorites" element={<UserFavorites />} />
+          <Route path="reviews" element={<UserReviews />} />
+        </Route>
+        
         <Route path="/anime/write/:id" element={<WriteReview/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>

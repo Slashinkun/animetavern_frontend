@@ -20,7 +20,7 @@ export default function WriteReview(){
         })
             if(!res.ok){
                 const text = await res.text();
-                alert("Erreur ajout critique : " + text);
+                alert("Error while adding review : " + text);
                 return;
             }
 
@@ -45,7 +45,7 @@ export default function WriteReview(){
             onChange={(e) => setRating(Number(e.target.value))}
             className="border"
             />
-            <button onClick={sendReview} className="border">Envoyer</button>
+            <button onClick={sendReview} className="border">Send</button>
         </div>
     )
 }

@@ -37,7 +37,7 @@ export default function Search() {
 
       setResults(filteredAnimes);
     } catch (err) {
-      console.error("Erreur fetch Jikan:", err);
+      console.error("Error fetch Jikan:", err);
       setResults([]);
     }
   };
@@ -46,15 +46,15 @@ export default function Search() {
     <div>
       <input
         type="text"
-        placeholder="Rechercher un anime..."
+        placeholder="Search an anime..."
         value={query}
         onChange={e => setQuery(e.target.value)}
         className=" border border-gray rounded m-2"
       />
-      <button onClick={handleSearch} className="border rounded-xs">Chercher</button>
+      <button onClick={handleSearch} className="border rounded-xs">Search</button>
 
       <div style={{ marginTop: "20px" }}>
-        {hasSearched && results.length === 0 && <p>Aucun résultat</p>}
+        {hasSearched && results.length === 0 && <p>No results</p>}
 
         {results.map((anime, index) => (
           // <Link

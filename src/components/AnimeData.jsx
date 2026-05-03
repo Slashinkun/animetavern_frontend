@@ -12,18 +12,18 @@ export default function AnimeInfo({ anime }) {
   };
 
   return (
-    <div className="flex flex-col col-span-1 mx-auto px-2 py-2">
-      <div><strong>Type</strong> : {anime.type}</div>
-      <div><strong>Episodes</strong> : {anime.episodes}</div>
-      <div><strong>Status</strong> : {isAiring(anime.airing)}</div>
-      <div><strong>Aired</strong> : {anime.aired?.string}</div>
-      <div><strong>Score</strong> : {anime.score}</div>
-      <div><strong>Popularity</strong> : {anime.popularity}</div>
-      <div><strong>Rating</strong> : {anime.rating}</div>
-      <div><strong>Studios</strong> : {parseNames(anime.studios)}</div>
-      <div><strong>Producers</strong> : {parseNames(anime.producers)}</div>
-      <div><strong>Genre</strong> : {parseNames(anime.genres)}</div>
-      <div><strong>Source</strong> : {anime.source}</div>
-    </div>
+    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+  <span className="font-semibold">Type</span> <span>{anime.type}</span>
+  <span className="font-semibold">Episodes</span> <span>{anime.episodes}</span>
+  <span className="font-semibold">Status</span> <span>{isAiring(anime.airing)}</span>
+  <span className="font-semibold">Aired</span> <span>{anime.aired?.string}</span>
+  <span className="font-semibold">Score</span> <span>{anime.score}</span>
+  <span className="font-semibold">Popularity</span> <span>{anime.popularity}</span>
+  <span className="font-semibold">Rating</span> <span>{anime.rating}</span>
+  <span className="font-semibold">Studios</span> <span>{parseNames(anime.studios)}</span>
+  <span className="font-semibold">Producers</span> <span>{parseNames(anime.producers)}</span>
+  <span className="font-semibold">Genre</span> <span>{parseNames(anime.genres)}</span>
+  <span className="font-semibold">Source</span> <span>{anime.source}</span>
+</div>
   );
 }

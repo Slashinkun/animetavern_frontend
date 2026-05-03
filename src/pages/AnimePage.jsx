@@ -13,7 +13,7 @@ export default function AnimePage({ isLoggedIn }) {
     const fetchAnime = async () => {
       try {
         setLoading(true);
-        console.log("CALLING API WITH COOKIE:", document.cookie)
+        
         const res = await fetch(`http://localhost:8080/anime/${id}`, {
         credentials: "include"
         });
@@ -31,8 +31,8 @@ export default function AnimePage({ isLoggedIn }) {
     fetchAnime();
   }, [id]);
 
-  if (loading) return <p>Chargement...</p>;
-  if (!data) return <p>Anime introuvable</p>;
+  if (loading) return <p>Loading...</p>;
+  if (!data) return <p>Anime not found</p>;
 
   const anime = data.anime.data;
 
@@ -46,38 +46,50 @@ export default function AnimePage({ isLoggedIn }) {
   };
 
   return (
-    <div>
-      <AnimeHeader anime={anime}></AnimeHeader>
+    <div className="w-full p-4">
 
-      {!data.isInList && (<button onClick={addAnimeToList} className="border">Add to list</button>)}
+  
+    <AnimeHeader anime={anime} />
 
-      
-      <div className="grid grid-cols-3 gap-6 max-w-6xl mx-auto">
+  {/* ACTIONS */}
+   <div className="flex gap-2 mt-3">
+  
+    {!data.isInList && (
+      <button
+        onClick={addAnimeToList}
+        className="border px-2 py-1 rounded"
+      >
+        Add to list
+      </button>
+    )}
 
-        <div className="col-span-1">
-          {
-            isLoggedIn && (
-            <Link to={`/anime/write/${id}`}>
-            <button className="border" >Write a review</button>
-          </Link>)
-          }
-          
-          <AnimeData anime={anime} />
-          
-        </div>
+    {isLoggedIn && (
+      <Link to={`/anime/write/${id}`}>
+        <button className="border px-2 py-1 rounded hover:bg-gray-500">
+          Write a review
+        </button>
+      </Link>
+    )}
 
-        {/* <div className="col-span-2">
-          <AnimeReviews animeId={anime.mal_id} />
-        </div> */}
+  </div>
 
-</div>
+  
 
+  {/* BODY */}
+  <div className="grid grid-cols-3 gap-6 mt-4">
 
-      
-      
-
-     
-      
+    {/* LEFT */}
+    <div className="col-span-1 flex flex-col gap-4">
+      <AnimeData anime={anime} />
     </div>
+
+    {/* RIGHT */}
+    <div className="col-span-2">
+      
+     
+    </div>
+
+  </div>
+</div>
   );
 }

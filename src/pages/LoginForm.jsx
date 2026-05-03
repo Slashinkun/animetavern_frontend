@@ -35,7 +35,7 @@ export default function Login({ setUserId, setUsername }) {
         return;
       }
 
-      // 2) récupère user réel via /me (source de vérité)
+      // 2) récupère user réel via /me 
       const meRes = await fetch("http://localhost:8080/me", {
         method: "GET",
         credentials: "include",
@@ -64,7 +64,7 @@ export default function Login({ setUserId, setUsername }) {
       onSubmit={handleSubmit}
       className="max-w-md mx-auto p-6 m-2 bg-white rounded shadow-md"
     >
-      <h2 className="text-2xl font-bold mb-4">Se connecter</h2>
+      <h2 className="text-2xl font-bold mb-4">Login</h2>
 
       <label className="block mb-2 font-semibold">Email</label>
       <input
@@ -74,7 +74,7 @@ export default function Login({ setUserId, setUsername }) {
         className="w-full border border-gray-300 rounded p-2 mb-4"
       />
 
-      <label className="block mb-2 font-semibold">Mot de passe</label>
+      <label className="block mb-2 font-semibold">Password</label>
       <input
         type="password"
         value={password}
@@ -87,7 +87,7 @@ export default function Login({ setUserId, setUsername }) {
         disabled={!isValid}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500"
       >
-        Se connecter
+        Login
       </button>
     </form>
   );

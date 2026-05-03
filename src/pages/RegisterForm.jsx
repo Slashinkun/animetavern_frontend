@@ -33,7 +33,7 @@ export default function Register() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 m-2 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-4">S'inscrire</h2>
+      <h2 className="text-2xl font-bold mb-4">Sign in</h2>
 
       <label className="block mb-2 font-semibold">Email</label>
       <input
@@ -44,7 +44,7 @@ export default function Register() {
         className="w-full border border-gray-300 rounded p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       
-      <label className="block mb-2 font-semibold">Pseudo</label>
+      <label className="block mb-2 font-semibold">Nickname</label>
       <input
         type="text"
         placeholder=""
@@ -53,7 +53,7 @@ export default function Register() {
         className="w-full border border-gray-300 rounded p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      <label className="block mb-2 font-semibold">Mot de passe</label>
+      <label className="block mb-2 font-semibold">Password</label>
       <input
         type="password"
         placeholder=""
@@ -62,7 +62,7 @@ export default function Register() {
         className="w-full border border-gray-300 rounded p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      <button type="submit" disabled={!isValid} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-600" >S'inscrire</button>
+      <button type="submit" disabled={!isValid} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-600" >Sign in</button>
     </form>
   );
 }

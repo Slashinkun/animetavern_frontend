@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function LogoutButton({ setIsLoggedIn }) {
+export default function LogoutButton({ setUserId,setUsername }) {
   
   const navigate = useNavigate();
 
@@ -17,7 +17,8 @@ export default function LogoutButton({ setIsLoggedIn }) {
       return;
     }
 
-    setIsLoggedIn(false);
+    setUserId(null);
+    setUsername("");
     navigate("/");
   } catch (err) {
     console.error(err);
@@ -25,6 +26,9 @@ export default function LogoutButton({ setIsLoggedIn }) {
 };
 
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <button onClick={handleLogout} 
+    className="border p-2 rounded-xl bg-red-600 font-bold hover:bg-red-800">
+      Logout
+    </button>
   );
 }

@@ -38,7 +38,7 @@ export default function UserReviews(){
         <div>
             <ul>
                 {userReviews.reviews.map (r => (
-                    <UserReview data={r}></UserReview>
+                    <UserReview data={r} isUser={userData.is_user} key={r.id}></UserReview>
                 ))}
             </ul>
         </div>

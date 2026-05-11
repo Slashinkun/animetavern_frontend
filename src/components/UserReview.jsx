@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function UserReview({ data }) {
+export default function UserReview({ data, isUser }) {
   return (
     <div className="border rounded p-3 mb-2 flex gap-3">
 
@@ -29,6 +29,11 @@ export default function UserReview({ data }) {
         <p className="text-gray-700 text-sm mt-1">
           {data.content}
         </p>
+
+        {isUser && (
+          <button>Delete</button>
+        )}
+        
 
       </div>
     </div>

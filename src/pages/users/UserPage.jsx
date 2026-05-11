@@ -41,13 +41,44 @@
           {userData.is_user ? "Your profile" : userData.username + "'s profile"}
         </h1>
 
-        <div className="flex gap-4 border-b mb-4">
-        <NavLink to="" end>Animes</NavLink>
-        <NavLink to="favorites">Favorites</NavLink>
-        <NavLink to="reviews">Reviews</NavLink>
+        <div className="flex gap-4 border-b mb-4 bg-gray-900 text-white ">
+        <NavLink to="" 
+        end
+        className={({ isActive }) =>
+          `px-4 py-2 rounded-t transition-colors ${
+            isActive
+              ? "bg-gray-700 font-semibold"
+              : "hover:bg-gray-800 text-gray-300"
+        }`
+    }
+        >
+          Animes
+          </NavLink>
+        <NavLink to="favorites"
+          className={({ isActive }) =>
+            `px-4 py-2 rounded-t transition-colors ${
+            isActive
+          ? "bg-gray-700 font-semibold"
+          : "hover:bg-gray-800 text-gray-300"
+      }`
+    }
+        >
+          Favorites
+          </NavLink>
+        <NavLink to="reviews"
+          className={({ isActive }) =>
+            `px-4 py-2 rounded-t transition-colors ${
+            isActive
+          ? "bg-gray-700 font-semibold"
+          : "hover:bg-gray-800 text-gray-300"
+      }`
+    }
+        >
+          Reviews
+          </NavLink>
       </div>
 
-      <Outlet context={{ userData }} />
+      <Outlet context={{ userData, setUserData }} />
 
       </div>
     )

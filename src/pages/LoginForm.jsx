@@ -31,7 +31,7 @@ export default function Login({ setUserId, setUsername }) {
 
       if (!res.ok) {
         const text = await res.text();
-        alert("Erreur login : " + text);
+        alert("Login error : " + text);
         return;
       }
 
@@ -55,7 +55,7 @@ export default function Login({ setUserId, setUsername }) {
       navigate("/");
     } catch (err) {
       console.error(err);
-      alert("Erreur serveur");
+      alert("Server error");
     }
   };
 

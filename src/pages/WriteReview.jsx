@@ -28,7 +28,7 @@ export default function WriteReview(){
 
         } catch (err) {
              console.error(err);
-             alert("Erreur serveur");
+             alert("Server error");
         }
         
 

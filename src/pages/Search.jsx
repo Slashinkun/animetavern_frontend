@@ -57,24 +57,7 @@ export default function Search() {
         {hasSearched && results.length === 0 && <p>No results</p>}
 
         {results.map((anime, index) => (
-          // <Link
-          //  key={anime.mal_id}
-          //  className="mb-2 cursor-pointer"
-          //   //style={{ marginBottom: "10px", cursor: "pointer" }}
-          //   to={`/anime/${anime.mal_id}`}
-          // >
-          //   {/* <img
-          //     src={anime.images.jpg.small_image_url}
-          //     alt={anime.title}
-          //     width={50}
-          //     style={{ marginRight: "10px" }}
-          //   />
-          //   <span>
-          //     {anime.title_english || anime.title} ({anime.episodes || "?"} eps)
-          //   </span> */}
-
-            
-          // </Link>
+         
           <SearchEntry anime={anime} key={anime.mal_id}></SearchEntry>
         ))}
       </div>

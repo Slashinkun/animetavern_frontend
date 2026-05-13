@@ -4,7 +4,7 @@ import AnimeHeader from "../components/AnimeHeader";
 import AnimeData from "../components/AnimeData";
 
 
-export default function AnimePage({ isLoggedIn }) {
+export default function AnimePage({ isLoggedIn,showToast }) {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +25,7 @@ export default function AnimePage({ isLoggedIn }) {
         setData(null);
       } finally {
         setLoading(false);
+       
       }
     };
 
@@ -37,13 +38,27 @@ export default function AnimePage({ isLoggedIn }) {
   const anime = data.anime.data;
 
   const addAnimeToList = async () => {
-  await fetch("http://localhost:8080/user/anime", {
+  const res = await fetch("http://localhost:8080/user/anime", {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ anime_id: anime.mal_id })
   });
-  };
+
+  if (!res.ok) {
+  const text = await res.text();
+  showToast(text, "error");
+  return;
+}
+
+  setData(prev => ({
+    ...prev,
+    isInList: true
+  }));
+
+  showToast("Anime ajouté ✔", "success");
+
+};
 
   return (
     <div className="w-full p-4">
@@ -70,6 +85,12 @@ export default function AnimePage({ isLoggedIn }) {
         </button>
       </Link>
     )}
+
+    {
+      isLoggedIn && (
+        <button className="border rounded px-2 py-1 bg-pink-400 hover:bg-pink-300"  >Add to favorites</button>
+      )
+    }
 
   </div>
 

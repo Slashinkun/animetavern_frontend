@@ -18,6 +18,16 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState(null)
+
+
+  const showToast = (message, type = "info") => {
+  setToast({ message, type });
+
+  setTimeout(() => {
+    setToast(null);
+  }, 3000);
+};
 
   // check session
   useEffect(() => {
@@ -84,6 +94,14 @@ function App() {
 
       </nav>
 
+      {toast && (
+  <div className={`fixed bottom-4 right-4 px-4 py-2 rounded text-white
+    ${toast.type === "error" ? "bg-red-600" : "bg-green-600"}
+  `}>
+    {toast.message}
+  </div>
+)}
+
       <div className="p-2">
         {isLoggedIn ? (
           <p>Logged in as {username}</p>
@@ -104,7 +122,7 @@ function App() {
             />
           }
         />
-        <Route path="/anime/:id" element={<AnimePage isLoggedIn={isLoggedIn} />} />
+        <Route path="/anime/:id" element={<AnimePage isLoggedIn={isLoggedIn} showToast={showToast} />} />
         <Route path="/search" element={<Search />} />
         
         <Route path="/user/:id" element={<UserPage />}>

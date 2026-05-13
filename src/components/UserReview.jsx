@@ -1,6 +1,29 @@
 import { Link } from "react-router-dom";
 
 export default function UserReview({ data, isUser }) {
+
+  const deleteReview = async () => {
+    try{
+      const res = await fetch(`http://localhost:8080/reviews/${data.id}`,{
+        method: "DELETE",
+                credentials: "include"
+      });
+
+      if (!res.ok) {
+            console.error(await res.text());
+            return;
+
+            }
+    }catch(err){
+      console.error(err);
+    }
+      
+  }
+
+  
+
+
+
   return (
     <div className="border rounded p-3 mb-2 flex gap-3">
 
@@ -31,7 +54,9 @@ export default function UserReview({ data, isUser }) {
         </p>
 
         {isUser && (
-          <button>Delete</button>
+          <button className="border rounded p-2 bg-red-600 hover:bg-red-500" onClick={deleteReview}>
+            Delete
+            </button>
         )}
         
 

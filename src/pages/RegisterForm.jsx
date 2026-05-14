@@ -2,18 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]{1,255}\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email); 
+    return emailRegex.test(email);
   };
-  const isValid = password.length >= 8 && username.length >= 5 && validateEmail(email) ;
+  const isValid = password.length >= 8 && username.length >= 5 && validateEmail(email);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     fetch("http://localhost:8080/register", {
       method: "POST",
@@ -21,7 +21,7 @@ export default function Register() {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: new URLSearchParams({
-        email : email,
+        email: email,
         username: username,
         password: password
       })
@@ -43,7 +43,7 @@ export default function Register() {
         onChange={(e) => setEmail(e.target.value)}
         className="w-full border border-gray-300 rounded p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      
+
       <label className="block mb-2 font-semibold">Nickname</label>
       <input
         type="text"

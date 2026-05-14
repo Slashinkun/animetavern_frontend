@@ -3,24 +3,24 @@ import { Link } from "react-router-dom";
 export default function UserReview({ data, isUser }) {
 
   const deleteReview = async () => {
-    try{
-      const res = await fetch(`http://localhost:8080/reviews/${data.id}`,{
+    try {
+      const res = await fetch(`http://localhost:8080/reviews/${data.id}`, {
         method: "DELETE",
-                credentials: "include"
+        credentials: "include"
       });
 
       if (!res.ok) {
-            console.error(await res.text());
-            return;
+        console.error(await res.text());
+        return;
 
-            }
-    }catch(err){
+      }
+    } catch (err) {
       console.error(err);
     }
-      
+
   }
 
-  
+
 
 
 
@@ -39,9 +39,9 @@ export default function UserReview({ data, isUser }) {
 
         <div className="flex justify-between">
           <Link to={`/anime/${data.anime_id}`}>
-          <p className="font-semibold">
-            {data.anime_title}
-          </p>
+            <p className="font-semibold">
+              {data.anime_title}
+            </p>
           </Link>
 
           {data.rating !== null && (
@@ -56,9 +56,9 @@ export default function UserReview({ data, isUser }) {
         {isUser && (
           <button className="border rounded p-2 bg-red-600 hover:bg-red-500" onClick={deleteReview}>
             Delete
-            </button>
+          </button>
         )}
-        
+
 
       </div>
     </div>

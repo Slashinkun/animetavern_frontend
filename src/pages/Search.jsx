@@ -32,7 +32,7 @@ export default function Search() {
           anime.title_english?.toLowerCase().includes(q)
         )
       }
-        
+
       );
 
       setResults(filteredAnimes);
@@ -57,7 +57,7 @@ export default function Search() {
         {hasSearched && results.length === 0 && <p>No results</p>}
 
         {results.map((anime, index) => (
-         
+
           <SearchEntry anime={anime} key={anime.mal_id}></SearchEntry>
         ))}
       </div>

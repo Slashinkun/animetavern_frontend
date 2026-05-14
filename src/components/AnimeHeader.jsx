@@ -12,18 +12,18 @@ export default function AnimeHeader({ anime }) {
         </h4>
       </div>
 
-      
+
       <div className="grid grid-cols-3 gap-4">
 
         {/* IMAGE */}
         <div className="col-span-1 flex justify-center">
-            <img
-          src={anime.images.jpg.image_url}
-          alt={anime.title}
-          className="col-span-1 text-gray-100 line-clamp-6"
-        />
+          <img
+            src={anime.images.jpg.image_url}
+            alt={anime.title}
+            className="col-span-1 text-gray-100 line-clamp-6"
+          />
         </div>
-        
+
 
         {/* SYNOPSIS */}
         <p className="col-span-2 whitespace-pre-line max-h-80 overflow-y-auto ">

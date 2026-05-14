@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link,NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 
 import Home from "./pages/Home";
 import RegisterForm from "./pages/RegisterForm";
@@ -22,12 +22,12 @@ function App() {
 
 
   const showToast = (message, type = "info") => {
-  setToast({ message, type });
+    setToast({ message, type });
 
-  setTimeout(() => {
-    setToast(null);
-  }, 3000);
-};
+    setTimeout(() => {
+      setToast(null);
+    }, 3000);
+  };
 
   // check session
   useEffect(() => {
@@ -61,16 +61,16 @@ function App() {
   return (
     <BrowserRouter>
       <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
-        
+
         <div className="flex gap-4">
           <Link to="/">AnimeTavern</Link>
 
-          
+
           <Link to="/search">Search</Link>
           {isLoggedIn && (
             <Link to={`/user/${userId}`}>Profile</Link>
           )}
-          
+
         </div>
 
         <div className="flex gap-4 items-center">
@@ -81,26 +81,26 @@ function App() {
             </>
           )}
           {isLoggedIn && userId && (
-          <>
-            
-            <LogoutButton
-              setUserId={setUserId}
-              setUsername={setUsername}
-            />
-          </>
-        )}
+            <>
+
+              <LogoutButton
+                setUserId={setUserId}
+                setUsername={setUsername}
+              />
+            </>
+          )}
         </div>
-        
+
 
       </nav>
 
       {toast && (
-  <div className={`fixed bottom-4 right-4 px-4 py-2 rounded text-white
+        <div className={`fixed bottom-4 right-4 px-4 py-2 rounded text-white
     ${toast.type === "error" ? "bg-red-600" : "bg-green-600"}
   `}>
-    {toast.message}
-  </div>
-)}
+          {toast.message}
+        </div>
+      )}
 
       <div className="p-2">
         {isLoggedIn ? (
@@ -124,14 +124,14 @@ function App() {
         />
         <Route path="/anime/:id" element={<AnimePage isLoggedIn={isLoggedIn} showToast={showToast} />} />
         <Route path="/search" element={<Search />} />
-        
+
         <Route path="/user/:id" element={<UserPage />}>
           <Route index element={<UserProfile />} />
           <Route path="favorites" element={<UserFavorites />} />
           <Route path="reviews" element={<UserReviews />} />
         </Route>
-        
-        <Route path="/anime/write/:id" element={<WriteReview/>} />
+
+        <Route path="/anime/write/:id" element={<WriteReview />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

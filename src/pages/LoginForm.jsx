@@ -42,7 +42,7 @@ export default function Login({ setUserId, setUsername }) {
       });
 
       if (!meRes.ok) {
-        throw new Error("Impossible de récupérer l'utilisateur");
+        throw new Error("Cannot found the user");
       }
 
       const user = await meRes.json();

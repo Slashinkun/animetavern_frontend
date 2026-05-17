@@ -61,6 +61,40 @@ export default function AnimePage({ isLoggedIn, showToast }) {
 
   };
 
+
+  const updateFavorites = async (status) => {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/user/anime/${anime.mal_id}/favorite`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ favorite: status })
+        }
+      );
+
+      if (!res.ok) {
+        const text = await res.text();
+        showToast(text, "error");
+        return;
+      }
+
+      setData(prev => ({
+        ...prev,
+        isFavorite: status
+      }));
+
+      status
+        ? showToast("Anime added into favorites ✔", "success")
+        : showToast("Anime removed from favorites ✔", "success");
+
+    } catch (err) {
+      console.error(err);
+      showToast("Server error", "error");
+    }
+  };
+
   return (
     <div className="w-full p-4">
 
@@ -88,10 +122,22 @@ export default function AnimePage({ isLoggedIn, showToast }) {
         )}
 
         {
-          isLoggedIn && (
-            <button className="border rounded px-2 py-1 bg-pink-400 hover:bg-pink-300"  >Add to favorites</button>
+          isLoggedIn && !data.isFavorite && (
+            <button className="border rounded px-2 py-1 bg-pink-400 hover:bg-pink-300"
+              onClick={() => updateFavorites(true)}
+            >
+              Add to favorites
+            </button>
           )
         }
+
+        {isLoggedIn && data.isFavorite && (
+          <button className="border rounded px-2 py-1 bg-pink-400 hover:bg-pink-300"
+            onClick={() => updateFavorites(false)}
+          >
+            Remove from favorites
+          </button>
+        )}
 
       </div>
 

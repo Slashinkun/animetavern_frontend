@@ -131,7 +131,7 @@ function App() {
           <Route path="reviews" element={<UserReviews />} />
         </Route>
 
-        <Route path="/anime/write/:id" element={<WriteReview />} />
+        <Route path="/anime/write/:id" element={<WriteReview showToast={showToast} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

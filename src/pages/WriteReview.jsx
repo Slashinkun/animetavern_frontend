@@ -2,7 +2,7 @@ import { use, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export default function WriteReview() {
+export default function WriteReview({ showToast }) {
 
     const { id } = useParams()
     const [content, setContent] = useState("")
@@ -20,7 +20,7 @@ export default function WriteReview() {
             })
             if (!res.ok) {
                 const text = await res.text();
-                alert("Error while adding review : " + text);
+                showToast(text, "error")
                 return;
             }
 

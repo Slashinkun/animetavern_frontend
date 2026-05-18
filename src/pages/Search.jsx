@@ -44,14 +44,24 @@ export default function Search() {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search an anime..."
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        className=" border border-gray rounded m-2"
-      />
-      <button onClick={handleSearch} className="border rounded-xs">Search</button>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Search an anime..."
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          className=" border border-gray rounded m-2"
+        />
+        <button onClick={handleSearch} className="border rounded p-1 bg-blue-500 text-white hover:bg-blue-600">Search</button>
+      </form>
+
+
 
       <div style={{ marginTop: "20px" }}>
         {hasSearched && results.length === 0 && <p>No results</p>}

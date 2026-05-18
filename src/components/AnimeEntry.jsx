@@ -19,6 +19,7 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes }
                 return;
 
             }
+
             onRemove(anime.mal_id);
         } catch (err) {
             console.error(err);
@@ -85,20 +86,54 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes }
     return (
         <div className="flex justify-between items-center border px-2 hover:bg-gray-400 p-2">
             <div className="flex items-center gap-4">
-                <img src={anime.image_url} alt="" className="w-20 h-25 object-cover rounded p-2" />
-                <Link to={`/anime/${anime.mal_id}`}>
-                    <p className="wrap-break-word font-semibold" >{anime.title}</p>
-                </Link>
-                <span>{anime.viewed_episodes}/{anime.episodes}</span>
+                <img src={anime.image_url}
+                    alt={anime.title}
+                    className="w-20 h-25 object-cover rounded-md shadow"
+                />
 
-                <p>{status}</p>
+                <div className="flex flex-col">
+                    <Link to={`/anime/${anime.mal_id}`}>
+                        <p className="wrap-break-word font-semibold" >{anime.title}</p>
+                    </Link>
+
+                    <span>{anime.viewed_episodes}/{anime.episodes}</span>
+
+                    <span className="mt-1 text-xs text-white px-2 py-1 rounded bg-gray-700 w-fit">
+                        {status}
+                    </span>
+
+                </div>
 
 
+            </div>
+
+
+
+            <div className="flex items-center gap-2">
+                {isUser && (
+                    <div className="flex items-center gap-1 mr-2">
+                        <button
+                            className="border w-10 disabled:bg-gray-700 hover:bg-gray-500"
+                            onClick={() => updateEpisodes(1)}
+                            disabled={anime.viewed_episodes >= (anime.episodes ?? 0)}
+                        >
+                            +
+                        </button>
+
+                        <button
+                            className="border w-10 disabled:bg-gray-700  hover:bg-gray-500"
+                            onClick={() => updateEpisodes(-1)}
+                            disabled={anime.viewed_episodes <= 0}
+                        >
+                            -
+                        </button>
+                    </div>
+                )}
 
                 {isEditing ? (
                     <div>
                         <select value={status} onChange={(e) => setStatus(e.target.value)}
-                            className="border"
+                            className="border rounded px-2 py-1"
                         >
                             <option value="PLANNING">PLANNING</option>
                             <option value="WATCHING">WATCHING</option>
@@ -121,32 +156,10 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes }
                     <button onClick={() => setEditing(true)}
                         className="border rounded p-1 bg-green-500 hover:bg-green-600"
                     >
-                        Edit status
+                        Edit
                     </button>
                 )}
 
-
-                {isUser && (
-                    <div className="flex gap-2">
-
-                        <button
-                            className="border w-10 disabled:bg-gray-700 hover:bg-gray-500"
-                            onClick={() => updateEpisodes(1)}
-                            disabled={anime.viewed_episodes >= (anime.episodes ?? 0)}
-                        >
-                            +
-                        </button>
-
-                        <button
-                            className="border w-10 disabled:bg-gray-700  hover:bg-gray-500"
-                            onClick={() => updateEpisodes(-1)}
-                            disabled={anime.viewed_episodes <= 0}
-                        >
-                            -
-                        </button>
-
-                    </div>
-                )}
 
                 {isUser && (
                     <button
@@ -158,7 +171,25 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes }
                     </button>
                 )}
 
+
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     )
 }

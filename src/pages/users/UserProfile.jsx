@@ -5,7 +5,7 @@ export default function UserProfile() {
   const { userData, setUserData } = useOutletContext()
   return (
     <div>
-      <h2>Animes:</h2>
+
       <ul>
         {userData.animes.map(a => (
 

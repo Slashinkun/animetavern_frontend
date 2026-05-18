@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 import { useParams, NavLink, Outlet } from "react-router-dom"
+
 import AnimeEntry from "../../components/AnimeEntry"
 
 export default function UserPage() {
   const { id } = useParams()
-
   const [userData, setUserData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -37,11 +37,11 @@ export default function UserPage() {
 
   return (
     <div>
-      <h1>
-        {userData.is_user ? "Your profile" : userData.username + "'s profile"}
+      <h1 className="text-3xl font-bold mb-1">
+        {userData.is_user ? "Your profile" : `${userData.username}'s profile`}
       </h1>
 
-      <div className="flex gap-4 border-b mb-4 bg-gray-900 text-white ">
+      <div className="flex gap-2 border-b mb-4 bg-gray-900 text-white ">
         <NavLink to=""
           end
           className={({ isActive }) =>

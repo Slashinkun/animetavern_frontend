@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import AnimeHeader from "../components/AnimeHeader";
 import AnimeData from "../components/AnimeData";
 import AnimeReview from "../components/AnimeReview";
+import NotFound from "./NotFound";
 
 
 export default function AnimePage({ isLoggedIn, showToast }) {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const fetchAnime = async () => {
@@ -18,6 +20,14 @@ export default function AnimePage({ isLoggedIn, showToast }) {
         const res = await fetch(`http://localhost:8080/anime/${id}`, {
           credentials: "include"
         });
+
+        if (res.status === 404) {
+          setNotFound(true);
+          return;
+        }
+
+        if (!res.ok) throw new Error("Fetch error");
+
         const json = await res.json();
 
         setData(json);
@@ -34,6 +44,7 @@ export default function AnimePage({ isLoggedIn, showToast }) {
   }, [id]);
 
   if (loading) return <p>Loading...</p>;
+  if (notFound) return <NotFound />;
   if (!data) return <p>Anime not found</p>;
 
   const anime = data.anime.data;

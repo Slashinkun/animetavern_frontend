@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 
-export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes }) {
+export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes, onUpdateStatus }) {
 
     const [isEditing, setEditing] = useState(false)
     const [status, setStatus] = useState(anime.status);
@@ -70,11 +70,8 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes }
                 return;
             }
 
-            onUpdateEpisodes(anime.mal_id, {
-                ...anime,
-                status
-            });
-
+            const data = await res.json();
+            onUpdateStatus(anime.mal_id, data);
             setEditing(false);
 
         } catch (err) {

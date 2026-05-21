@@ -30,6 +30,20 @@ export default function UserProfile() {
                     ? {
                       ...anime,
                       viewed_episodes: data.viewed_episodes,
+
+                    }
+                    : anime
+                )
+              }));
+            }}
+
+            onUpdateStatus={(animeId, data) => {
+              setUserData(prev => ({
+                ...prev,
+                animes: prev.animes.map(anime =>
+                  anime.mal_id === animeId
+                    ? {
+                      ...anime,
                       status: data.status
                     }
                     : anime

@@ -12,6 +12,7 @@ export default function UserReviews() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+
         const fetchUserReviews = async () => {
             try {
                 const res = await fetch(`http://localhost:8080/user/${id}/reviews`, {
@@ -20,7 +21,7 @@ export default function UserReviews() {
                 if (!res.ok) throw new Error("Error during fetch")
                 const reviews = await res.json()
                 setUserReviews(reviews)
-            } catch (error) {
+            } catch (err) {
                 setError(err.message)
             } finally {
                 setLoading(false)
@@ -30,6 +31,8 @@ export default function UserReviews() {
         fetchUserReviews()
     }, [id])
 
+
+
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
     if (!userReviews) return <div>No data</div>
@@ -37,7 +40,7 @@ export default function UserReviews() {
     return (
         <div>
             <ul>
-                {userReviews.reviews.map(r => (
+                {userReviews?.reviews.map(r => (
                     <UserReview data={r} isUser={userData.is_user} key={r.id}></UserReview>
                 ))}
             </ul>

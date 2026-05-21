@@ -31,17 +31,25 @@ export default function AnimePage({ isLoggedIn, showToast }) {
         const json = await res.json();
 
         setData(json);
+
       } catch (err) {
         console.error("Erreur fetch anime:", err);
         setData(null);
       } finally {
         setLoading(false);
 
+
       }
     };
 
     fetchAnime();
   }, [id]);
+
+  useEffect(() => {
+    if (data) {
+      document.title = `AnimeTavern - ${data.title}`;
+    }
+  }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (notFound) return <NotFound />;
@@ -68,7 +76,7 @@ export default function AnimePage({ isLoggedIn, showToast }) {
       isInList: true
     }));
 
-    showToast("Anime ajouté ✔", "success");
+    showToast("Anime added into list ✔", "success");
 
   };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchEntry from "../components/SearchEntry";
 import { Link } from "react-router-dom";
@@ -8,6 +8,10 @@ export default function Search() {
   const [results, setResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "AnimeTavern - Search"
+  })
 
   const handleSearch = async () => {
     if (!query) return;
@@ -56,7 +60,7 @@ export default function Search() {
           placeholder="Search an anime..."
           value={query}
           onChange={e => setQuery(e.target.value)}
-          className=" border border-gray rounded m-2"
+          className=" border border-gray rounded m-2 p-2"
         />
         <button onClick={handleSearch} className="border rounded p-1 bg-blue-500 text-white hover:bg-blue-600">Search</button>
       </form>

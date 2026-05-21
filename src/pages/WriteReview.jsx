@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,6 @@ export default function WriteReview({ showToast }) {
     const navigate = useNavigate();
 
     const sendReview = async () => {
-
         try {
             const res = await fetch(`http://localhost:8080/anime/${id}/reviews`, {
                 method: "POST",
@@ -36,7 +35,8 @@ export default function WriteReview({ showToast }) {
 
     return (
         <div className="p-2">
-            <textarea value={content} maxLength={2000} onChange={(e) => setContent(e.target.value)} className="w-2xl h-100 border" />
+            <h2 className="text-xl font-bold">Write a review</h2>
+            <textarea value={content} maxLength={2000} onChange={(e) => setContent(e.target.value)} className="w-2xl h-100 border p-2" />
             ⭐
             <input
                 type="number"

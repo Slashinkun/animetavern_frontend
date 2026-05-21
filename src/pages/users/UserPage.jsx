@@ -31,6 +31,13 @@ export default function UserPage() {
     fetchUserData()
   }, [id])
 
+  useEffect(() => {
+    if (userData) {
+      document.title = `AnimeTavern - ${userData.username} s'profile`
+    }
+
+  }, [userData])
+
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!userData) return <div>No data</div>

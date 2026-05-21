@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ setUserId, setUsername }) {
@@ -14,6 +14,10 @@ export default function Login({ setUserId, setUsername }) {
   };
 
   const isValid = password.length >= 8 && validateEmail(email);
+
+  useEffect(() => {
+    document.title = "AnimeTavern - Login"
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();

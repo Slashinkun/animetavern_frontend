@@ -111,7 +111,7 @@ function App() {
       </div>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route
           path="/login"

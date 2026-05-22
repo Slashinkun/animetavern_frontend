@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams, NavLink, Outlet } from "react-router-dom"
 import AnimeEntry from "../../components/AnimeEntry"
-import { API_URL } from ".../utils/config";
+import { API_URL } from "./../utils/config";
 export default function UserPage() {
   const { id } = useParams()
   const [userData, setUserData] = useState(null)

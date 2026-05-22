@@ -15,7 +15,7 @@ export default function WriteReview({ showToast }) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ anime_id: Number(id), content, rating })
+                body: JSON.stringify({ content, rating })
             })
             if (!res.ok) {
                 const text = await res.text();

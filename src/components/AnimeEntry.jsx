@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../utils/config";
 
 
 export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes, onUpdateStatus }) {
@@ -9,7 +10,7 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes, 
 
     const handleRemove = async () => {
         try {
-            const res = await fetch(`http://localhost:8080/user/anime/${anime.mal_id}`, {
+            const res = await fetch(`${API_URL}/anime/${anime.mal_id}`, {
                 method: "DELETE",
                 credentials: "include"
             });
@@ -29,7 +30,7 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes, 
 
     const updateEpisodes = async (delta) => {
         try {
-            const res = await fetch(`http://localhost:8080/user/anime/${anime.mal_id}/episodes`,
+            const res = await fetch(`${API_URL}/user/anime/${anime.mal_id}/episodes`,
                 {
                     method: "PATCH",
                     credentials: "include",
@@ -57,7 +58,7 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes, 
     const updateStatus = async () => {
         try {
             const res = await fetch(
-                `http://localhost:8080/user/anime/${anime.mal_id}/status`,
+                `${API_URL}/user/anime/${anime.mal_id}/status`,
                 {
                     method: "PATCH",
                     credentials: "include",

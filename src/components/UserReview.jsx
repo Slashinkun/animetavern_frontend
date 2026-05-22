@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import { API_URL } from "../utils/config";
 
 export default function UserReview({ data, isUser }) {
 
   const deleteReview = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/reviews/${data.id}`, {
+      const res = await fetch(`${API_URL}/reviews/${data.id}`, {
         method: "DELETE",
         credentials: "include"
       });

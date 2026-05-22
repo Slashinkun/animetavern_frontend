@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL } from "../utils/config";
 export default function LogoutButton({ setUserId, setUsername }) {
 
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:8080/logout", {
+      const res = await fetch(`${API_URL}/logout`, {
         method: "POST",
         credentials: "include"
       });

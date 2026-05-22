@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL } from "../utils/config";
 export default function Login({ setUserId, setUsername }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ export default function Login({ setUserId, setUsername }) {
 
     try {
       // 1) login → crée cookie côté backend
-      const res = await fetch("http://localhost:8080/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -40,7 +40,7 @@ export default function Login({ setUserId, setUsername }) {
       }
 
       // 2) récupère user réel via /me 
-      const meRes = await fetch("http://localhost:8080/me", {
+      const meRes = await fetch(`${API_URL}/me`, {
         method: "GET",
         credentials: "include",
       });

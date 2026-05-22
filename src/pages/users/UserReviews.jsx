@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useOutletContext } from "react-router-dom"
 import UserReview from "../../components/UserReview"
-import { API_URL } from "../utils/config";
+import { API_URL } from ".../utils/config";
 
 export default function UserReviews() {
 

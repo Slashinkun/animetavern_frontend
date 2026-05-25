@@ -1,7 +1,7 @@
 import { use, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL } from "../utils/config";
 export default function WriteReview({ showToast }) {
 
     const { id } = useParams()
@@ -11,7 +11,7 @@ export default function WriteReview({ showToast }) {
 
     const sendReview = async () => {
         try {
-            const res = await fetch(`http://localhost:8080/anime/${id}/reviews`, {
+            const res = await fetch(`${API_URL}/anime/${id}/reviews`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

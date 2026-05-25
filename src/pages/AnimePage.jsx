@@ -4,7 +4,7 @@ import AnimeHeader from "../components/AnimeHeader";
 import AnimeData from "../components/AnimeData";
 import AnimeReview from "../components/AnimeReview";
 import NotFound from "./NotFound";
-
+import { API_URL } from "../utils/config";
 
 export default function AnimePage({ isLoggedIn, showToast }) {
   const { id } = useParams();
@@ -17,7 +17,7 @@ export default function AnimePage({ isLoggedIn, showToast }) {
       try {
         setLoading(true);
 
-        const res = await fetch(`http://localhost:8080/anime/${id}`, {
+        const res = await fetch(`${API_URL}/anime/${id}`, {
           credentials: "include"
         });
 
@@ -58,7 +58,7 @@ export default function AnimePage({ isLoggedIn, showToast }) {
   const anime = data.anime.data;
 
   const addAnimeToList = async () => {
-    const res = await fetch("http://localhost:8080/user/anime", {
+    const res = await fetch(`${API_URL}/user/anime`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -84,7 +84,7 @@ export default function AnimePage({ isLoggedIn, showToast }) {
   const updateFavorites = async (status) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/user/anime/${anime.mal_id}/favorite`,
+        `${API_URL}/user/anime/${anime.mal_id}/favorite`,
         {
           method: "PATCH",
           credentials: "include",

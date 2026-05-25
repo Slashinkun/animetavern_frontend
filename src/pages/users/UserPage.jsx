@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams, NavLink, Outlet } from "react-router-dom"
-
 import AnimeEntry from "../../components/AnimeEntry"
-
+import { API_URL } from "../../utils/config";
 export default function UserPage() {
   const { id } = useParams()
   const [userData, setUserData] = useState(null)
@@ -12,7 +11,7 @@ export default function UserPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/user/${id}`, {
+        const res = await fetch(`${API_URL}/user/${id}`, {
           credentials: "include"
         })
 

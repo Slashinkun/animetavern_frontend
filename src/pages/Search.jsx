@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchEntry from "../components/SearchEntry";
 import { Link } from "react-router-dom";
-
+import { API_URL } from "../utils/config";
 export default function Search() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -18,7 +18,7 @@ export default function Search() {
 
     try {
       const res = await fetch(
-        "http://localhost:8080/search?query=" + encodeURIComponent(query)
+        `${API_URL}/search?query=` + encodeURIComponent(query)
       );
 
       setHasSearched(true);

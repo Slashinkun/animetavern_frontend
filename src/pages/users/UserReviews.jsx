@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useOutletContext } from "react-router-dom"
 import UserReview from "../../components/UserReview"
-
+import { API_URL } from "../../utils/config";
 
 export default function UserReviews() {
 
@@ -15,7 +15,7 @@ export default function UserReviews() {
 
         const fetchUserReviews = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/user/${id}/reviews`, {
+                const res = await fetch(`${API_URL}/user/${id}/reviews`, {
                     credentials: "include"
                 })
                 if (!res.ok) throw new Error("Error during fetch")

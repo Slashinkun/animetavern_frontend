@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
-
 import Home from "./pages/Home";
 import RegisterForm from "./pages/RegisterForm";
 import LoginForm from "./pages/LoginForm";
@@ -13,7 +12,7 @@ import WriteReview from "./pages/WriteReview";
 import UserReviews from "./pages/users/UserReviews";
 import UserProfile from "./pages/users/UserProfile";
 import UserFavorites from "./pages/users/UserFavorites";
-
+import { API_URL } from "../utils/config";
 function App() {
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState("");
@@ -31,7 +30,7 @@ function App() {
 
   // check session
   useEffect(() => {
-    fetch("http://localhost:8080/me", {
+    fetch(`${API_URL}/me`, {
       method: "GET",
       credentials: "include",
     })

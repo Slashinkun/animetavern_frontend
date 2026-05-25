@@ -127,34 +127,36 @@ export default function AnimeEntry({ anime, isUser, onRemove, onUpdateEpisodes, 
                     </div>
                 )}
 
-                {isEditing ? (
-                    <div>
-                        <select value={status} onChange={(e) => setStatus(e.target.value)}
-                            className="border rounded px-2 py-1"
-                        >
-                            <option value="PLANNING">PLANNING</option>
-                            <option value="WATCHING">WATCHING</option>
-                            <option value="FINISHED">FINISHED</option>
-                        </select>
+                {isUser && (
+                    isEditing ? (
+                        <div>
+                            <select value={status} onChange={(e) => setStatus(e.target.value)}
+                                className="border rounded px-2 py-1"
+                            >
+                                <option value="PLANNING">PLANNING</option>
+                                <option value="WATCHING">WATCHING</option>
+                                <option value="FINISHED">FINISHED</option>
+                            </select>
 
-                        <button onClick={updateStatus}
+                            <button onClick={updateStatus}
+                                className="border rounded p-1 bg-green-500 hover:bg-green-600"
+                            >
+                                Confirm edit
+                            </button>
+
+                            <button onClick={() => setEditing(false)}
+                                className="border rounded p-1 bg-red-500 hover:bg-red-600"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    ) : (
+                        <button onClick={() => setEditing(true)}
                             className="border rounded p-1 bg-green-500 hover:bg-green-600"
                         >
-                            Confirm edit
+                            Edit
                         </button>
-
-                        <button onClick={() => setEditing(false)}
-                            className="border rounded p-1 bg-red-500 hover:bg-red-600"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                ) : (
-                    <button onClick={() => setEditing(true)}
-                        className="border rounded p-1 bg-green-500 hover:bg-green-600"
-                    >
-                        Edit
-                    </button>
+                    )
                 )}
 
 

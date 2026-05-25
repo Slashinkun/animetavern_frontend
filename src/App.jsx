@@ -12,7 +12,7 @@ import WriteReview from "./pages/WriteReview";
 import UserReviews from "./pages/users/UserReviews";
 import UserProfile from "./pages/users/UserProfile";
 import UserFavorites from "./pages/users/UserFavorites";
-import { API_URL } from "../utils/config";
+import { API_URL } from "./utils/config";
 function App() {
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState("");

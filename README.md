@@ -24,80 +24,25 @@ Pour déployer l'application localement, veuillez suivre les instructions suivan
 
 - Demarrer postgreSQL en tant que postgres : `sudo -u postgres psql` (Linux) ou `psql -U postgres -h localhost -p 5432` (Windows)
 
-- Créer la base de données de l’application : `CREATE DATABASE animetavern_db;`
+- Créer la base de données de l’application : `CREATE DATABASE nom_de_la_db;`
 
 - Verifier qu’elle a bien été crée : `\l`
 
-- Créer l’utilisateur myuser : `CREATE USER myuser WITH PASSWORD 'mypassword'`
+- Créer l’utilisateur : `CREATE USER nom_utilisateur WITH PASSWORD 'mdpchoisi'`
 
-- Donner à myuser les permissions sur la base de données : `GRANT ALL PRIVILEGES ON DATABASE animetavern_db TO myuser;`;
+- Donner à myuser les permissions sur la base de données : `GRANT ALL PRIVILEGES ON DATABASE nom_de_la_db TO nom_utilisateur;`;
 
 - Quitter PostgreSQL : `\q`
 
-- Se reconnecter avec myuser :
+- Se reconnecter à la base de données avec le nom d'utilisateur que vous avez choisi :
 
 Linux :
-`psql -U myuser -d animetavern_db`
+`psql -U nom_utilisateur -d nom_de_la_db`
 
 Windows :
-`psql -U myuser -h localhost -p 5432 -d animetavern_db`
+`psql -U nom_utilisateur -h localhost -p 5432 -d nom_de_la_db`
 
-- Créer les tables de l’application :
-
-```sql
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email TEXT NOT NULL UNIQUE,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-```sql
-CREATE TABLE anime (
-    id INTEGER PRIMARY KEY,
-    title VARCHAR(255),
-    image TEXT,
-    episodes INTEGER DEFAULT 0
-);
-```
-
-```sql
-CREATE TABLE user_anime (
-    id SERIAL PRIMARY KEY,
-
-    user_id INTEGER NOT NULL,
-    anime_id INTEGER NOT NULL,
-
-    status VARCHAR(50) DEFAULT 'PLANNING',
-    note INTEGER,
-    favorite BOOLEAN DEFAULT FALSE,
-    viewed_episodes INTEGER DEFAULT 0,
-
-    CONSTRAINT unique_user_anime UNIQUE (user_id, anime_id),
-
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (anime_id) REFERENCES anime(id) ON DELETE CASCADE
-
-);
-```
-
-```sql
-CREATE TABLE reviews (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL,
-    anime_id INTEGER NOT NULL,
-    content TEXT NOT NULL,
-    rating INTEGER,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (anime_id) REFERENCES anime(id) ON DELETE CASCADE,
-    UNIQUE (user_id, anime_id)
-
-);
-```
+- Créer les tables de l’application contenu dans le fichier 'tables.sql'
 
 ## Serveur 
 
@@ -109,16 +54,16 @@ A l’aide d’un terminal, se mettre dans le répertoire du serveur : `cd /ser
 
 Installer les dépendances : `go mod tidy`
 
-Créer le fichier .env dans le répertoire du serveur avec ces paramètres :
-
+Créer le fichier .env dans le répertoire du serveur avec les identifiants que vous avez choisi lors de la création de la base de données :
 ```
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=myuser
-DB_PASSWORD=mypassword
-DB_NAME=animetavern_db
+DB_USER=nom_utilisateur
+DB_PASSWORD=mdpchoisi
+DB_NAME=nom_de_la_db
 DB_SSLMODE=disable
 ```
+
 
 Vérifier que le serveur démarre : `go run main.go`
 
